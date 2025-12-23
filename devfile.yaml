@@ -103,7 +103,3 @@ commands:
       group:
         kind: test
 
-events:
-  preStart:
-    - install
-

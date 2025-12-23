@@ -21,6 +21,10 @@ components:
       env:
         - name: NODE_ENV
           value: development
+        - name: npm_config_cache
+          value: /projects/kube-santa/.npm
+        - name: NPM_CONFIG_CACHE
+          value: /projects/kube-santa/.npm
       endpoints:
         - name: vite-dev-server
           targetPort: 5173
@@ -45,6 +49,14 @@ commands:
       group:
         kind: build
         isDefault: true
+
+  - id: clean-install
+    exec:
+      component: nodejs
+      commandLine: rm -rf node_modules package-lock.json && npm install && npx playwright install chromium
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
 
   - id: dev
     exec:

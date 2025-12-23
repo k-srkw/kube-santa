@@ -10,21 +10,19 @@ metadata:
     - vite
     - playwright
     - education
+  projectType: "Node.js"
+  language: "JavaScript"  
 
 components:
   - name: nodejs
     container:
-      image: node:22
+      image: registry.access.redhat.com/ubi10/nodejs-22:10.1
       memoryLimit: 2Gi
       cpuLimit: "1"
       mountSources: true
       env:
         - name: NODE_ENV
           value: development
-        - name: npm_config_cache
-          value: /projects/kube-santa/.npm
-        - name: NPM_CONFIG_CACHE
-          value: /projects/kube-santa/.npm
       endpoints:
         - name: vite-dev-server
           targetPort: 5173

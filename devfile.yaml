@@ -24,7 +24,7 @@ components:
         - name: NODE_ENV
           value: development
         - name: PLAYWRIGHT_BROWSERS_PATH
-          value: /home/user/.cache/ms-playwright
+          value: ${PROJECT_SOURCE}/.cache/ms-playwright
         - name: CI
           value: "true"
       endpoints:

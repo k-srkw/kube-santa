@@ -1,0 +1,26 @@
+---
+alwaysApply: true
+description: Kube Santa アプリケーションのドメイン知識、メタファー、設計制約
+globs: src/**/*, docs/**/*, features/**/*
+---
+
+# Kube Santa Domain Rules
+
+## Concept & Constraints
+
+- **Simulation Only:** バックエンドは作成しない。Kubernetes の挙動（Reconciliation Loop 等）はフロントエンドの状態管理（`setInterval` や `useEffect`）で模倣する。
+- **Kids First Design:** ボタンは大きく、フィードバック（クリック時の反応など）を大げさにする。難しい専門用語は UI にそのまま出さず、メタファーを使用する。
+
+## Metaphor Mapping (Strict Dictionary)
+
+コード内の変数名は英語（K8s用語）を使用するが、UI 上のテキストやコメントは以下のメタファーに準拠すること。
+
+| Kubernetes Term | Kube Santa World (UI/Text) | Description |
+| :--- | :--- | :--- |
+| **Cluster** | **クリスマスの夜空 (Night Sky)** | アプリケーションの背景エリア。 |
+| **Pod** | **サンタのソリ (Sleigh) 🛷** | 生成・消滅する最小単位。 |
+| **ReplicaSet** | **魔法の契約書 (Magic Contract) 📜** | 「常にN台必要」と定義するルール。 |
+| **Deployment** | **クリスマス作戦 (Operation)** | ソリの管理全体。 |
+| **Scaling** | **サンタの増員** | ソリを一瞬で増やすこと。 |
+| **Self-healing** | **復活の魔法 (Revival Magic) ✨** | 壊されたソリが自動生成される挙動。 |
+| **Chaos Monkey** | **イタズラ猿 (Naughty Monkey) 🐒** | ソリを破壊するランダム要素。 |

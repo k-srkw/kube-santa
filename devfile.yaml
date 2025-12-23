@@ -1,0 +1,109 @@
+schemaVersion: 2.2.0
+metadata:
+  name: kube-santa
+  version: 1.0.0
+  displayName: Kube Santa
+  description: Kubernetes の概念をクリスマスの世界観で学ぶ教育用 Web アプリケーション
+  tags:
+    - react
+    - typescript
+    - vite
+    - playwright
+    - education
+
+components:
+  - name: nodejs
+    container:
+      image: node:22
+      memoryLimit: 2Gi
+      cpuLimit: 1
+      mountSources: true
+      volumeMounts:
+        - name: node-modules
+          path: /node_modules
+      env:
+        - name: NODE_ENV
+          value: development
+      endpoints:
+        - name: vite-dev-server
+          targetPort: 5173
+          exposure: public
+          protocol: http
+          path: /
+        - name: vite-preview
+          targetPort: 4173
+          exposure: public
+          protocol: http
+          path: /
+      command:
+        - sleep
+        - infinity
+  - name: node-modules
+    volume:
+      size: 2Gi
+
+commands:
+  - id: install
+    exec:
+      component: nodejs
+      commandLine: npm install && npx playwright install chromium
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: true
+
+  - id: dev
+    exec:
+      component: nodejs
+      commandLine: npm run dev
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: run
+        isDefault: true
+      hotReloadCapable: true
+
+  - id: build
+    exec:
+      component: nodejs
+      commandLine: npm run build
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+
+  - id: preview
+    exec:
+      component: nodejs
+      commandLine: npm run preview
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: run
+
+  - id: test:e2e
+    exec:
+      component: nodejs
+      commandLine: npm run test:e2e
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: test
+        isDefault: true
+
+  - id: test:e2e:ui
+    exec:
+      component: nodejs
+      commandLine: npx playwright test --ui
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: test
+
+  - id: test:e2e:headed
+    exec:
+      component: nodejs
+      commandLine: npx playwright test --headed
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: test
+
+events:
+  preStart:
+    - install
+

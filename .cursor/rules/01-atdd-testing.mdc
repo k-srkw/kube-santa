@@ -1,0 +1,24 @@
+---
+alwaysApply: false
+description: ATDD (Acceptance Test-Driven Development) と E2E テストのルール
+globs: features/**/*.feature, tests/**/*.ts, src/**/*.tsx, src/**/*.ts
+---
+
+# Testing Strategy (ATDD) Rules
+
+このプロジェクトは **Playwright + playwright-bdd** を使用した厳格な ATDD で開発します。
+
+## The Process (Strict Rules)
+
+1. **Spec First:** 実装コードを書く前に、必ず Gherkin (`.feature`) ファイルを作成または更新する。
+2. **Red-Green-Refactor:**
+   - **Step 1 (Red):** ステップ定義 (`tests/steps/`) を書き、テストを実行して**失敗**することを確認する。
+   - **Step 2 (Green):** テストを通過させるための最小限の React コードを実装する。
+   - **Step 3 (Refactor):** コードを整理する。
+   - **禁止事項:** テスト（Red状態）を確認せずに機能実装を行ってはならない。
+
+## Selector Strategy
+
+- テストの堅牢性を保つため、重要な UI 要素には必ず `data-testid` 属性を付与すること。
+  - Bad: `button.className.includes('red')`
+  - Good: `data-testid="chaos-monkey-button"`

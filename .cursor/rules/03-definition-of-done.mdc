@@ -1,0 +1,24 @@
+---
+alwaysApply: true
+description: Done の定義
+globs: **/*
+---
+
+# Definition of Done
+
+このプロジェクトは各 PBI の受け入れ条件 (Acceptance Criteria) に加え以下で定義する Done の定義を満たすことを PBI の完了条件とします。
+
+PBI 完了前に必ず Done の定義を満たしていることを確認してください。
+
+## ToDo
+
+- @README.md の `## プロダクトバックログ` を更新し、最新化していること
+- PBI の内容によって必要な場合は既存ドキュメント ( **/*.md ) を更新し、最新化していること
+
+## Test Process
+
+- `npm run test:e2e` で実行する E2E テストを全てパスしていること
+
+## Git
+
+- main ブランチにコミットすること

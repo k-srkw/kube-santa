@@ -16,7 +16,7 @@ components:
     container:
       image: node:22
       memoryLimit: 2Gi
-      cpuLimit: 1
+      cpuLimit: "1"
       mountSources: true
       volumeMounts:
         - name: node-modules
@@ -78,7 +78,7 @@ commands:
       group:
         kind: run
 
-  - id: test:e2e
+  - id: test-e2e
     exec:
       component: nodejs
       commandLine: npm run test:e2e
@@ -87,7 +87,7 @@ commands:
         kind: test
         isDefault: true
 
-  - id: test:e2e:ui
+  - id: test-e2e-ui
     exec:
       component: nodejs
       commandLine: npx playwright test --ui
@@ -95,7 +95,7 @@ commands:
       group:
         kind: test
 
-  - id: test:e2e:headed
+  - id: test-e2e-headed
     exec:
       component: nodejs
       commandLine: npx playwright test --headed

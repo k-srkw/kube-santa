@@ -23,17 +23,27 @@ components:
       env:
         - name: NODE_ENV
           value: development
+        - name: PLAYWRIGHT_BROWSERS_PATH
+          value: /home/user/.cache/ms-playwright
+        - name: CI
+          value: "true"
       endpoints:
         - name: vite-dev-server
           targetPort: 5173
           exposure: public
           protocol: http
           path: /
+          attributes:
+            public: 'true'
+            cookiesAuthEnabled: 'false'
         - name: vite-preview
           targetPort: 4173
           exposure: public
           protocol: http
           path: /
+          attributes:
+            public: 'true'
+            cookiesAuthEnabled: 'false'
       command:
         - sleep
         - infinity
@@ -42,7 +52,9 @@ commands:
   - id: install
     exec:
       component: nodejs
-      commandLine: npm install && npx playwright install chromium
+      commandLine: |
+        npm install && \
+        npx playwright install chromium
       workingDir: ${PROJECT_SOURCE}
       group:
         kind: build
@@ -51,7 +63,10 @@ commands:
   - id: clean-install
     exec:
       component: nodejs
-      commandLine: rm -rf node_modules package-lock.json && npm install && npx playwright install chromium
+      commandLine: |
+        rm -rf node_modules package-lock.json && \
+        npm install && \
+        npx playwright install chromium
       workingDir: ${PROJECT_SOURCE}
       group:
         kind: build
@@ -103,6 +118,14 @@ commands:
     exec:
       component: nodejs
       commandLine: npx playwright test --headed
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: test
+
+  - id: test-e2e-debug
+    exec:
+      component: nodejs
+      commandLine: npx playwright test --debug
       workingDir: ${PROJECT_SOURCE}
       group:
         kind: test
